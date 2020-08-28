@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-APPNAME="$(basename $0)"
+APPNAME="awesome"
 USER="${SUDO_USER:-${USER}}"
 HOME="${USER_HOME:-${HOME}}"
 
@@ -33,14 +33,11 @@ else
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Install Type: user_installdirs system_installdirs
-
 user_installdirs
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # OS Support: supported_os unsupported_oses
 
-unsupported_oses
+unsupported_oses macos
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -51,15 +48,18 @@ scripts_check
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Defaults
-
-APPNAME="awesome"
-PLUGNAMES=""
+APPNAME="${APPNAME:-awesome}"
+APPDIR="${APPDIR:-$HOME/.config/$APPNAME}"
+REPO="${DFMGRREPO:-https://github.com/dfmgr}/${APPNAME}"
+REPORAW="${REPORAW:-$REPO/raw}"
+APPVERSION="$(curl -LSs $REPORAW/master/version.txt)"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Version
+# Setup plugins
 
-APPVERSION="$(curl -LSs ${DFMGRREPO:-https://github.com/dfmgr}/$APPNAME/raw/master/version.txt)"
+PLUGNAMES=""
+PLUGDIR="${SHARE:-$HOME/.local/share}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -69,11 +69,7 @@ dfmgr_install
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Set options
-
-APPDIR="${HOMEDIR:-$CONF}/$APPNAME"
-PLUGDIR="$SHARE/$APPNAME"
-REPO="${DFMGRREPO:-https://github.com/dfmgr}/$APPNAME"
+# Version
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -128,7 +124,7 @@ install_cpan $CPAN
 install_gem $GEMS
 
 # Other dependencies
-dotfilesreq git sxhkd volumeicon nitrogen misc
+dotfilesreq git
 dotfilesreqadmin
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
