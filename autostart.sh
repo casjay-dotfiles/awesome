@@ -336,4 +336,4 @@ unset -f cmd_exist __kill __start
 
 ## End ##
 
-# vim: set sw=4 noai :
+# vim: set sw=2 noai :
