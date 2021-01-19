@@ -156,6 +156,7 @@ failexitcode
 
 # Plugins
 
+if __am_i_online; then
 if [ "$PLUGNAMES" != "" ]; then
     if [ -d "$PLUGDIR"/PLUGNAME/.git ]; then
         execute \
@@ -166,6 +167,7 @@ if [ "$PLUGNAMES" != "" ]; then
             "git_clone PLUGINREPO $PLUGDIR/PLUGNAME" \
             "Installing plugin PLUGNAME"
     fi
+fi
 fi
 
 # exit on fail
