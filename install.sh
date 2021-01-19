@@ -52,7 +52,7 @@ APPNAME="${APPNAME:-template}"
 APPDIR="${APPDIR:-$HOME/.config/$APPNAME}"
 REPO="${DFMGRREPO:-https://github.com/dfmgr}/${APPNAME}"
 REPORAW="${REPORAW:-$REPO/raw}"
-APPVERSION="$(curl -LSs $REPORAW/master/version.txt)"
+APPVERSION="$(__appversion)"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -138,15 +138,15 @@ ensure_perms
 
 # Main progam
 
-if [ -d "$APPDIR/.git" ]; then
+if [ -d "$DOWNLOADED_TO/.git" ]; then
     execute \
-    "git_update $APPDIR" \
-    "Updating $APPNAME configurations"
+        "git_update $APPDIR" \
+        "Updating $APPNAME configurations"
 else
     execute \
-    "backupapp && \
+        "backupapp && \
         git_clone -q $REPO/$APPNAME $APPDIR" \
-    "Installing $APPNAME configurations"
+        "Installing $APPNAME configurations"
 fi
 
 # exit on fail
@@ -159,12 +159,12 @@ failexitcode
 if [ "$PLUGNAMES" != "" ]; then
     if [ -d "$PLUGDIR"/PLUGNAME/.git ]; then
         execute \
-        "git_update $PLUGDIR" \
-        "Updating plugin PLUGNAME"
+            "git_update $PLUGDIR" \
+            "Updating plugin PLUGNAME"
     else
         execute \
-        "git_clone PLUGINREPO $PLUGDIR/PLUGNAME" \
-        "Installing plugin PLUGNAME"
+            "git_clone PLUGINREPO $PLUGDIR/PLUGNAME" \
+            "Installing plugin PLUGNAME"
     fi
 fi
 
@@ -180,8 +180,8 @@ run_postinst() {
 }
 
 execute \
-"run_postinst" \
-"Running post install scripts"
+    "run_postinst" \
+    "Running post install scripts"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
